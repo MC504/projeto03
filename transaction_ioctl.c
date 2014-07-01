@@ -6,7 +6,8 @@
 #include <linux/device.h>
 #include <linux/errno.h>
 #include <asm/uaccess.h>
- 
+#include <string.h>
+
 #include "transaction_ioctl.h"
  
 #define FIRST_MINOR 0
@@ -45,8 +46,8 @@ static long my_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 	    }
             t.code = code;
             t.value = value;
-            t.number = number;
-	    t.name = name;
+            strcpy(t.number, number);
+            strcpy(t.name, name);
 
             if (copy_to_user((transaction_arg_t *)arg, &t, sizeof(transaction_arg_t)))
             {
@@ -57,8 +58,8 @@ static long my_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 	case CLR_TRANSACTION:
             code = -1;
             value = -1;
-            number = "";
-	    name = "";
+            strcpy(number, "");
+            strcpy(name, "");
             break;
         
 	case SET_TRANSACTION:
@@ -68,8 +69,8 @@ static long my_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
             }
             code = t.code;
             value = t.value;
-            number = t.number;
-	    name = t.name;
+            strcpy(number, t.number);
+            strcpy(name, t.name);
             break;
         
 	default:
