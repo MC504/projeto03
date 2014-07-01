@@ -144,3 +144,7 @@ static void __exit transaction_ioctl_exit(void)
  
 module_init(transaction_ioctl_init);
 module_exit(transaction_ioctl_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("AJM");
+MODULE_DESCRIPTION("Transaction ioctl() Char Driver");
