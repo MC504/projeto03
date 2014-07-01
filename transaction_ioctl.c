@@ -18,8 +18,8 @@ static struct class *cl;
 
 static int code = -1; 
 static float value = -1;
-static char[CARDSIZE] number="";
-static char[NAMESIZE] name="";
+static char number[CARDSIZE]="";
+static char name[NAMESIZE]="";
  
 static int my_open(struct inode *i, struct file *f)
 {

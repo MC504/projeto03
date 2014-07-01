@@ -11,8 +11,8 @@ typedef struct
 {
     int code;
     float value;
-    char[CARDSIZE] number;
-    char[NAMESIZE] name;
+    char number[CARDSIZE];
+    char name[NAMESIZE];
 } transaction_arg_t;
  
 #define GET_TRANSACTION _IOR('t', 1, transaction_arg_t *)
