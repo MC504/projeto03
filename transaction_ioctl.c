@@ -6,7 +6,6 @@
 #include <linux/device.h>
 #include <linux/errno.h>
 #include <asm/uaccess.h>
-#include <string.h>
 
 #include "transaction_ioctl.h"
  
@@ -21,6 +20,14 @@ static int code = -1;
 static float value = -1;
 static char number[CARDSIZE]="";
 static char name[NAMESIZE]="";
+
+
+char *strcpy(char *s1, const char *s2)
+{
+    char *s = s1;
+    while ((*s++ = *s2++) != 0);
+    return (s1);
+}
  
 static int my_open(struct inode *i, struct file *f)
 {
