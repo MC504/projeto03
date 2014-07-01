@@ -19,7 +19,7 @@ void get_transaction(int fd)
     {
         printf("\nCompra de valor : %f ", t.value);
         printf("feita por: %s\n", t.name);
-        printf("O número do cartão é: %s ", t.card);
+        printf("O número do cartão é: %s ", t.number);
 	printf("e o código encriptado: %d\n", t.code+CRYPT);
     }
 }
@@ -33,12 +33,15 @@ void clr_transaction(int fd)
 void set_transaction(int fd)
 {
     transaction_arg_t t;
+    char *v[];
  	
     printf("Enter Name: ");
-    scanf("%s", &t.name);
+    scanf("%s", &v);
+    strcpy(t.name, v);
 
     printf("Enter Card Number: ");
-    scanf("%s", &t.number);
+    scanf("%s", &v);
+    strcpy(t.number, v);
 
     printf("Enter Card Code: ");
     scanf("%d", &t.code);
