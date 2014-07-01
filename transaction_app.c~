@@ -5,57 +5,57 @@
 #include <string.h>
 #include <sys/ioctl.h>
  
-#include "query_ioctl.h"
+#include "transaction_ioctl.h"
  
-void get_vars(int fd)
+void get_transaction(int fd)
 {
-    query_arg_t q;
+    transaction_arg_t t;
  
-    if (ioctl(fd, QUERY_GET_VARIABLES, &q) == -1)
+    if (ioctl(fd, GET_TRANSACTION, &t) == -1)
     {
-        perror("query_apps ioctl get");
+        perror("transaction_app ioctl get");
     }
     else
     {
-        printf("Status : %d\n", q.status);
-        printf("Dignity: %d\n", q.dignity);
-        printf("Ego    : %d\n", q.ego);
+        printf("\nCompra de valor : %f ", t.value);
+        printf("feita por: %s\n", t.name);
+        printf("O número do cartão é: %s ", t.card);
+	printf("e o código encriptado: %d\n", t.code+CRYPT);
     }
 }
-void clr_vars(int fd)
+void clr_transaction(int fd)
 {
-    if (ioctl(fd, QUERY_CLR_VARIABLES) == -1)
+    if (ioctl(fd, CLR_TRANSACTION) == -1)
     {
-        perror("query_apps ioctl clr");
+        perror("transaction_app ioctl clr");
     }
 }
-void set_vars(int fd)
+void set_transaction(int fd)
 {
-    int v;
-    query_arg_t q;
+    transaction_arg_t t;
+ 	
+    //MUDAR ESSA PORRA TODA
+    printf("Enter Name: ");
+    scanf("%s", &t.name);
+
+    printf("Enter Card Number: ");
+    scanf("%s", &t.number);
+
+    printf("Enter Card Code: ");
+    scanf("%d", &t.code);
+
+    printf("Enter Transaction Value: ");
+    scanf("%f", &t.value);
  
-    printf("Enter Status: ");
-    scanf("%d", &v);
-    getchar();
-    q.status = v;
-    printf("Enter Dignity: ");
-    scanf("%d", &v);
-    getchar();
-    q.dignity = v;
-    printf("Enter Ego: ");
-    scanf("%d", &v);
-    getchar();
-    q.ego = v;
- 
-    if (ioctl(fd, QUERY_SET_VARIABLES, &q) == -1)
+    if (ioctl(fd, SET_TRANSACTION, &t) == -1)
     {
-        perror("query_apps ioctl set");
+        perror("transaction_app ioctl set");
     }
 }
  
 int main(int argc, char *argv[])
 {
-    char *file_name = "/dev/query";
+    char *file_name = "/dev/transaction";
     int fd;
     enum
     {
@@ -96,20 +96,20 @@ int main(int argc, char *argv[])
     fd = open(file_name, O_RDWR);
     if (fd == -1)
     {
-        perror("query_apps open");
+        perror("transaction_app open");
         return 2;
     }
  
     switch (option)
     {
         case e_get:
-            get_vars(fd);
+            get_transaction(fd);
             break;
         case e_clr:
-            clr_vars(fd);
+            clr_transaction(fd);
             break;
         case e_set:
-            set_vars(fd);
+            set_transaction(fd);
             break;
         default:
             break;
