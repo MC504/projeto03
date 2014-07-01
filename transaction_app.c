@@ -33,15 +33,12 @@ void clr_transaction(int fd)
 void set_transaction(int fd)
 {
     transaction_arg_t t;
-    char *v[];
  	
     printf("Enter Name: ");
-    scanf("%s", &v);
-    strcpy(t.name, v);
+    scanf("%s", &t.name);
 
     printf("Enter Card Number: ");
-    scanf("%s", &v);
-    strcpy(t.number, v);
+    scanf("%s", &t.number);
 
     printf("Enter Card Code: ");
     scanf("%d", &t.code);
